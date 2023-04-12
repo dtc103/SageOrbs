@@ -10,11 +10,13 @@ class OrbChain{
 public:
     OrbChain(size_t orb_count, Color trajectory[], size_t trajectory_size, int pin);
     ~OrbChain();
+
+    void begin();
     
     void set_uniform_orb_trajectory();
     void set_random_orb_trajectory();
     void set_orb_trajectory(Color trajectory[], size_t trajectory_size, int orb_index);
-    void show_next(int step); //the higher the step, the more colors will be skipped -> the faster the colour trajectory
+    void show_next_n(unsigned int n); //the higher the step, the more colors will be skipped -> the faster the colour trajectory
 
 private:
     Orb** orbs;

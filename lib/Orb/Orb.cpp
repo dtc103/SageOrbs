@@ -14,9 +14,8 @@ Orb::~Orb(){
 void Orb::begin(){
     randomSeed(analogRead(0));
     for(size_t i = 0; i < LED_COUNT; ++i){
-        int random_debug_tmp_var = random(INTERVALL_SIZE * this->color_count);
-        this->steps[i] = random_debug_tmp_var;
-        delay(10);
+        this->steps[i] = random(INTERVALL_SIZE * this->color_count);
+        delay(1);
     }
 }
 
@@ -40,20 +39,6 @@ Color Orb::get_color_value(size_t led){
     return color; 
 }
 
-String Orb::debug_get_interval_color(){
-    String debug_output = String("");
-
-    for(size_t i = 0; i < this->LED_COUNT; ++i){
-        debug_output += String("led") + String(i) + String(": ");
-        debug_output += String(this->get_color_value(i).r) + String(" ");
-        debug_output += String(this->get_color_value(i).g) + String(" ");
-        debug_output += String(this->get_color_value(i).b) + String(";\t");
-    }
-    debug_output += String("\n");
-
-    return debug_output;
-}
-
 Color Orb::get_interval_color(unsigned int step){
     unsigned int color_pick = step / INTERVALL_SIZE;
 
@@ -70,9 +55,8 @@ void Orb::set_trajectory(Color trajectory[], size_t num_colors){
 
     randomSeed(analogRead(0));
     for(size_t i = 0; i < LED_COUNT; ++i){
-        int step = random(INTERVALL_SIZE);
-        this->steps[i] = step;
-        delay(10);
+        this->steps[i] = random(INTERVALL_SIZE);
+        delay(1);
     }
 }
 
@@ -88,5 +72,19 @@ void Orb::set_random_color_change(){
 
         this->steps[i] = step;
     }
+}
+
+String Orb::debug_get_interval_color(){
+    String debug_output = String("");
+
+    for(size_t i = 0; i < this->LED_COUNT; ++i){
+        debug_output += String("led") + String(i) + String(": ");
+        debug_output += String(this->get_color_value(i).r) + String(" ");
+        debug_output += String(this->get_color_value(i).g) + String(" ");
+        debug_output += String(this->get_color_value(i).b) + String(";\t");
+    }
+    debug_output += String("\n");
+
+    return debug_output;
 }
 

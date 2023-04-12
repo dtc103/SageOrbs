@@ -2,16 +2,13 @@
 
 OrbChain::OrbChain(size_t orb_count, Color trajectory[], size_t trajectory_size, int pin){
     this->orb_count = orb_count;
-    this->orbs = new Orb*[orb_count];
+    this->orbs = new Orb*[this->orb_count];
 
     for(size_t i = 0; i < this->orb_count; ++i){
         this->orbs[i] = new Orb(trajectory, trajectory_size);
     }
-
+    
     this->strip = Adafruit_NeoPixel(orb_count * Orb::LED_COUNT, pin, NEO_KHZ800 + NEO_GRB);
-    strip.begin();
-    strip.clear();
-    strip.show();
 }
 
 OrbChain::~OrbChain(){
@@ -19,6 +16,16 @@ OrbChain::~OrbChain(){
         delete this->orbs[i];
     }
     delete[] this->orbs;
+}
+
+void OrbChain::begin(){
+    for(size_t i = 0; i < this->orb_count; ++i){
+        this->orbs[i]->begin();
+    }
+
+    strip.begin();
+    strip.clear();
+    strip.show();
 }
 
 void OrbChain::set_uniform_orb_trajectory(){
@@ -37,11 +44,9 @@ void OrbChain::set_orb_trajectory(Color trajectory[], size_t trajectory_size, in
     this->orbs[orb_index]->set_trajectory(trajectory, trajectory_size);
 }
 
-void OrbChain::show_next(int step){
-    Serial.println("Called OrbChain::show_next");
-    
-    if(step < 1){
-        step = 1;
+void OrbChain::show_next_n(unsigned int n){
+    if(n < 1){
+        n = 1;
     }
 
     int led_index = 0;
@@ -52,9 +57,7 @@ void OrbChain::show_next(int step){
             strip.setPixelColor(led_index, strip.Color(led_color.r, led_color.g, led_color.b));
             led_index++;
         }
-        for(int i = 0; i < step; ++i){
-            this->orbs[i]->next();
-        }
+        this->orbs[orb_num]->next_n(n);
     }
     strip.show();
 }
