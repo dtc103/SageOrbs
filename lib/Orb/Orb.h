@@ -23,8 +23,8 @@ Color(82, 255, 253), Color(1, 74, 79), Color(8, 103, 79), Color(1, 74, 79)
 
 class Orb{
 public:
-    static const size_t LED_COUNT = 3; //put to 6
-    static const int INTERVALL_SIZE = 1000;
+    static size_t LED_COUNT;
+    static size_t INTERVALL_SIZE;
 
     Orb(Color colors[], size_t num_colors);
     ~Orb();

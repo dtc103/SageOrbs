@@ -1,5 +1,8 @@
 #include "Orb.h"
 
+size_t Orb::LED_COUNT = 6;
+size_t Orb::INTERVALL_SIZE = 1000;
+
 Orb::Orb(Color colors[], size_t num_colors){
     this->color_trajectory = colors;
     this->color_count = num_colors;
